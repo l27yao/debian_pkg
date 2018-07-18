@@ -1,0 +1,18 @@
+steps:
+  - name: 'gcr.io/cloud-builders/bazel'
+    args: [
+      'run',
+      '//:debian_pkgs'
+    ]
+    id: 'debian-tarball'
+    waitFor:
+    - "-" # wait for nothing - start immediately
+
+# Step: store the tarball of debian packages in GCS
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['cp',
+           '/workspace/bazel-bin/debian_pkgs.runfiles/experiment/debian_pkgs.tar',
+           'gs://rbe-debian/debian_pkgs.tar'
+    ]
+    waitFor: # wait for all artifacts to be ready
+    - 'debian-tarball'
