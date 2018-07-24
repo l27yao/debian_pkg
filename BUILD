@@ -4,6 +4,11 @@ package(default_visibility = ["//visibility:public"])
 
 load("@base_images_docker//package_managers:download_pkgs.bzl", "download_pkgs")
 
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_image",
+)
+
 download_pkgs(
     name = "debian_pkgs",
     image_tar = "@ubuntu16_04//image",
@@ -31,4 +36,15 @@ download_pkgs(
         "wget",
         "zip",
     ],
+)
+
+container_image(
+    name = "my_ubuntu16_04",
+    base = "@ubuntu16_04//image",
+    cmd = [
+        "/bin/sh",
+        "-c",
+        "/bin/bash",
+    ],
+    files = ["@my_debian_pkgs//:debian_pkgs.tar"],
 )
