@@ -31,11 +31,11 @@ http_archive(
     urls = ["https://github.com/GoogleCloudPlatform/base-images-docker/archive/5530512a9e27f4dd76848a6b40ce2b2b23a87ece.tar.gz"],
 )
 
-load("//:gsutil.bzl", "gsutil_cp")
+load("//:gcs.bzl", "gcs_file")
 
-gsutil_cp(
-    name = "my_debian_pkgs",
-    file = "debian_pkgs.tar",
-    gcs_bucket = "gs://rbe-debian",
+gcs_file(
+    name = "ubuntu16_04_debian_pkgs",
+    file = "ubuntu16-04-debian_pkgs.tar",
+    bucket = "gs://rbe-toolchain-debs",
     sha256 = "ef442b29630142062177527786c60d9bed9485d6dcc549ba71c095a956566620",
 )

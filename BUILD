@@ -46,5 +46,5 @@ container_image(
         "-c",
         "/bin/bash",
     ],
-    files = ["@my_debian_pkgs//:debian_pkgs.tar"],
+    files = ["@ubuntu16_04_debian_pkgs//file"],
 )
